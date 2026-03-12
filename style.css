@@ -1,0 +1,55 @@
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+.circuloMod {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.circuloMod .canvas{
+    position: absolute;
+    left : 600px;
+    top : 150px;
+}
+.circuloMod .botao{
+    left: 0px;
+    top: 0px;
+    background-color: rgb(54, 53, 53);
+    color: white;
+    border: None;
+    height: 54px;
+    width: 200px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-left: 20px;
+    transition: opacity 0.15s;
+    }
+.circuloMod .ponteiro{
+    position: absolute;
+    top: 450px;
+    left: 900px;
+    width: 5px;
+    height: 100px;
+    background-color: black;
+    transition: transform 0.3s ease-out;
+    transform: translate(-50%, -100%) rotate(0deg);
+    transform-origin: bottom center;
+    border-top-left-radius: 20%;
+    border-top-right-radius: 20%;
+}
+
+
+
+
+
+
+
+
+
+
