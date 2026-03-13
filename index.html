@@ -5,12 +5,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
  <body> 
-    <div class="circuloMod">
-        <button class ="circuloMod botao"onclick= "desenharCirculoMod()">Teste</button>   
-        <div>
-            <canvas width="600" height="600" class="canvas" id="relogio"></canvas>
-        </div>
-        
+    <div class="circuloMod">   
+        <div><canvas width="600" height="600" id="relogio"></canvas></div>
+    </div>
+    <div class="interface">
+        <div><input type ="text" id="modn" placeholder="N" class="input"></input></div>
+        <div><input type ="text" id="numA" placeholder="A" class="input"></input></div>
+        <div><label for="operacoes"></label>
+        <select name="operacoes" id="operacoes" class ="selectOp">
+            <option value="" disabled selected >Escolha uma operação</option>
+            <option value="add">Adição (+)</option>
+            <option value="multi">Multiplicação (*)</option>
+            <option value ="expo">Exponenciação (aᵇ)</option>
+        </select></div>
+        <div><input type ="text" id="numB" placeholder="B" class="input"></input></div>
+    </div>
+
     <script src="circulomod.js"></script>
 </body>
 </html>
