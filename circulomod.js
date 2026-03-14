@@ -1,5 +1,6 @@
 let anguloGirado = 0;
 let animando = false;
+let pausado = false;
 let anim = [];
 
 function getOpcao() {
@@ -21,7 +22,7 @@ function apresentar(valores) {
         desenharCirculoMod(n);
         desenharGrafico(n);
 
-        criarPonteiro();
+        criarPonteiro(angulo * a);
         const opt = getOpcao();
 
         document.getElementById("numA").value = "";
@@ -33,7 +34,7 @@ function apresentar(valores) {
         } 
         else if (opt === "multi") {
             const timing = 800;
-            moverNVezes(b, a * angulo, timing);
+            moverNVezes(b - 1, a * angulo, timing);
         } 
         else if (opt === "expo") {
             const timing = 1000;
@@ -68,16 +69,29 @@ function mudarTiming(ms) {
 function moverNVezes(n, angulo, timing) {
     animando = true;
     mudarTiming(timing - 100);
+
     for (let i = 1; i <= n; i++) {
-        setTimeout(() => {
+        let movimento = setTimeout(() => {
+            
+            if(pausado){
+                return;
+            }
+
+            if (angulo > 360){
+                angulo = angulo % 360;
+            }
+            if(angulo == 0){
+                angulo = 360;
+            }
+            
             anguloGirado += angulo;
             moverGrau(anguloGirado);
-            if (i > 1) {
-                fazerlinhas(anguloGirado, anguloGirado - angulo);
-            }
+            fazerlinhas(anguloGirado - angulo, anguloGirado);
+            
             if (i === n) {
                 animando = false;
             }
+
         }, i * timing);
         anim.push(movimento);
     }
@@ -87,39 +101,42 @@ function moverNVezesExponencial(a, b, n, base, timing) {
     mudarTiming(timing - 100);
     animando = true;
     
-    let valorAtual = a % n; 
+    let valorAtual = a * a % n; 
 
-    for (let i = 1; i <= b; i++) {
+    for (let i = 2; i <= b; i++) {
+        if(pausado){
+            return;
+        }
         const angulo = valorAtual * base;   
 
-        setTimeout(() => {
+        let movimento = setTimeout(() => {
             let deltaAngulo = (angulo - (anguloGirado % 360) + 360) % 360;
-            if (deltaAngulo === 0 && a !== 0) {
+            if (deltaAngulo === 0 && a !== 0){
                 deltaAngulo = 360;
             }
             
             anguloGirado += deltaAngulo;
             moverGrau(anguloGirado); 
-            
-            if (i > 1) {
-                fazerlinhas(anguloGirado, anguloGirado - deltaAngulo);
-            }
+            fazerlinhas(anguloGirado - deltaAngulo, anguloGirado);
 
             if (i === b) {
                 animando = false;
             }
+
         }, i * timing);
-        
         valorAtual = (valorAtual * a) % n;
+        anim.push(movimento);
     }
 }
 
-function criarPonteiro() {
+function criarPonteiro(angulo) {
     if (!document.getElementById("ponteiro")) {
         const ponteiro = document.createElement("div");
         ponteiro.id = "ponteiro";
         ponteiro.classList.add("ponteiro");
         document.querySelector(".circuloMod").appendChild(ponteiro);
+        moverGrau(angulo);
+        anguloGirado = angulo;
     }
 }   
 
@@ -248,15 +265,39 @@ function resetar() {
     anguloGirado = 0;
 }
 
-function main() {
+function matarAnimacao(){
+    for(const a of anim){
+        clearTimeout(a);
+    }
+    animando = false;
+    anim = [];
+}
+
+function pDAnimacao(){
+    pausado = !pausado;
+}
+
+function controles(){
     document.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
+        if(event.key === "Enter") {
             if (animando) {
                 return;
             }
             const valores = getInputs();
             apresentar(valores);
         }
+        if(event.key === "q"){
+            matarAnimacao();
+            resetar();
+        }
+        if(event.key === "p"){
+            pDAnimacao();
+        }
     });
 }
+
+function main() {
+    controles();
+}
+
 main();
