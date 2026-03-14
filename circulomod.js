@@ -30,7 +30,7 @@ function apresentar(valores) {
 
         if (opt === "add") {
             const timing = 400;
-            moverNVezes(a + b, angulo, timing);
+            moverNVezes(b, angulo, timing);
         } 
         else if (opt === "multi") {
             const timing = 800;
