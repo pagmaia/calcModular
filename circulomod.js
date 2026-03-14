@@ -1,5 +1,6 @@
 let anguloGirado = 0;
 let animando = false;
+let anim = [];
 
 function getOpcao(){
     const op = document.getElementById("operacoes");
@@ -15,20 +16,20 @@ function apresentar(valores){
 
     resetar();
     n = parseInt(valores["modn"]);
-    if(n <= 25){
+    if(n <= 50){
         const angulo = 360 / n;
         desenharCirculoMod(n);
         desenharGrafico(n);
 
         a = parseInt(valores["numA"]);
-        criarPonteiro();
+        criarPonteiro(angulo * a);
         numA.value = "";
         const opt = getOpcao();
         b = parseInt(valores["numB"]);
 
         if(opt == "add"){
             const timing = 400;
-            moverNVezes(a + b, angulo, timing);
+            moverNVezes(b, angulo, timing);
         }
         else if(opt == "multi"){
             const timing = 800;
@@ -66,29 +67,29 @@ function moverNVezes(n, angulo, timing){
     animando = true;
     mudarTiming(timing - 100);
     for(let i = 1; i <= n; i++){
-        setTimeout(() =>{
+        let movimento = setTimeout(() =>{
             anguloGirado += angulo;
             moverGrau(anguloGirado);
-            if(i > 1){
-                fazerlinhas(anguloGirado, anguloGirado - angulo);
-            }
+            fazerlinhas(anguloGirado - angulo, anguloGirado);
+            
             if(i === n){
                 animando = false;
             }
 
         }, i * timing);
+        anim.push(movimento);
     }
 }
 
 function moverNVezesExponencial(a, b, n, base, timing){
     mudarTiming(timing - 100);
     animando = true;
-    for(let i = 1; i <= b; i++){
+    for(let i = 2; i <= b; i++){
         const valor = Math.pow(a, i);
         const posicao = valor % n;
         const angulo = posicao * base;   
 
-        setTimeout(() =>{
+        let movimento = setTimeout(() =>{
             let a = (angulo - (anguloGirado % 360) + 360) % 360;
             if(a == 0){
                 a = 360;
@@ -96,16 +97,16 @@ function moverNVezesExponencial(a, b, n, base, timing){
             
             anguloGirado += a;
             moverGrau(anguloGirado); 
-            if(i > 1){
-                fazerlinhas(anguloGirado, anguloGirado - a);
-            }
-
+            fazerlinhas(anguloGirado - a, anguloGirado);
+            desenharValorAtual(valor, posicao);
+        
             if(i === b){
                 animando = false;
             }
-        }, i * timing);
-        
+        }, i * timing); 
+        anim.push(movimento);
     }
+    
     
 }
 
@@ -114,6 +115,8 @@ function criarPonteiro(angulo){
     ponteiro.id = "ponteiro";
     ponteiro.classList.add("ponteiro");
     document.querySelector(".circuloMod").appendChild(ponteiro);
+    moverGrau(angulo);
+    anguloGirado = angulo;
 }   
 
 function removePonteiro(){
@@ -126,7 +129,7 @@ function desenharCirculoMod(n){
 
     const centrox = draw.width / 2;
     const centroy = draw.height / 2;
-    const raio = (draw.width / 2) - 150;
+    const raio = (draw.width / 2) - 100;
     obj.strokeStyle = "black";
     obj.font = "20px Helvetica"
     obj.lineWidth = 5;
@@ -168,7 +171,7 @@ function desenharGrafico(n){
 
     const centrox = draw.width / 2;
     const centroy = draw.height / 2;
-    const raio = (draw.width / 2) - 150;
+    const raio = (draw.width / 2) - 100;
     obj.font = "20px Helvetica"
     obj.textAlign = "center";
     obj.textBaseline = "middle";
@@ -196,12 +199,9 @@ function fazerlinhas(ini, final){
     const g = graf.getContext("2d"); 
     const centrox = graf.width / 2;
     const centroy = graf.height / 2;
-    const raio = (graf.width / 2) - 150;
+    const raio = (graf.width / 2) - 100 ;
     g.strokeStyle = "red";
     g.lineWidth = 3;
-
-    console.log(ini);
-    console.log(final);
 
     ini = ((ini + 90) * (Math.PI / 180));
     final = ((final + 90) * (Math.PI / 180));
@@ -239,15 +239,27 @@ function resetarPonteiro(){
     anguloGirado = 0;
 }
 
+function pararAnimacao(){
+    for(const a of anim){
+        clearTimeout(a);
+    }
+    animando = false;
+    anim = [];
+}
+
+
 function main(){
     document.addEventListener("keydown", function(event){
-        if(event.key === "Enter"){
-            console.log(animando);
+        if(event.key === "Enter"){ 
             if(animando){
                 return;
             }
             const valores = getInputs();
             apresentar(valores);
+        }
+        if(event.code === "Space"){
+            pararAnimacao();
+            resetar();
         }
     })
 }
