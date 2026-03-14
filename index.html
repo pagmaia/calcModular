@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Aritmética Modular</title>
     <link rel="stylesheet" href="style.css">
 </head>
- <body> 
-    <div class="circuloMod">   
-        <div><canvas width="600" height="600" id="relogio"></canvas></div>
-    </div>
-    <div class="grafico">   
-        <div><canvas width="600" height="600" id="grafico"></canvas></div>
-    </div>
-    <div class="interface">
-        <div><input type ="text" id="modn" placeholder="N" class="input"></input></div>
-        <div><input type ="text" id="numA" placeholder="A" class="input"></input></div>
-        <div><label for="operacoes"></label>
-        <select name="operacoes" id="operacoes" class ="selectOp">
-            <option value="" disabled selected >Escolha uma operação</option>
-            <option value="add">Adição (+)</option>
-            <option value="multi">Multiplicação (*)</option>
-            <option value ="expo">Exponenciação (aᵇ)</option>
-        </select></div>
-        <div><input type ="text" id="numB" placeholder="B" class="input"></input></div>
+<body> 
+    <div class="main-container">
+        <div class="interface card">
+            <input type="number" id="modn" placeholder="Módulo" class="input">
+            <input type="number" id="numA" placeholder="Primeiro número" class="input">
+            
+            <select name="operacoes" id="operacoes" class="selectOp">
+                <option value="" disabled selected>Escolha uma operação</option>
+                <option value="add">Adição (+)</option>
+                <option value="multi">Multiplicação (*)</option>
+                <option value="expo">Exponenciação (aᵇ)</option>
+            </select>
+            
+            <input type="number" id="numB" placeholder="Segundo número" class="input">
+        </div>
+
+        <div class="canvas-container">
+            <div class="circuloMod card">   
+                <canvas width="500" height="500" id="relogio"></canvas>
+                </div>
+            
+            <div class="grafico card">   
+                <canvas width="500" height="500" id="grafico"></canvas>
+            </div>
+        </div>
     </div>
 
     <script src="circulomod.js"></script>
