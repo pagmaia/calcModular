@@ -263,6 +263,8 @@ function resetar() {
         ponteiro.remove();
     }
     anguloGirado = 0;
+    pausado = false;
+    animando = false;
 }
 
 function matarAnimacao(){
