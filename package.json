@@ -1,0 +1,26 @@
+{
+  "name": "calcmodular",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Calculadora Modular Visual — Visualizador de Aritmética Modular",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagmaia/calcModular.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pagmaia/calcModular/issues"
+  },
+  "homepage": "https://github.com/pagmaia/calcModular#readme",
+  "devDependencies": {
+    "vite": "^8.0.0"
+  }
+}

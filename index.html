@@ -1,46 +1,143 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de Aritmética Modular</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="main-container">
-        <div class="title">
-            <p>Calculadora Modular</p>
+<!doctype html>
+<html lang="pt-br" data-tema="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora Modular — Visualizador de Aritmética Modular</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-inner">
+        <a href="#" class="header-brand">
+          <div class="brand-icon">Zn</div>
+          <span>Calculadora Modular</span>
+        </a>
+        <div class="header-actions">
+          <button id="btn-tema" class="btn-tema" title="Alternar tema">
+            <span class="tema-icone">🌙</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-container">
+      <!-- Hero -->
+      <section class="hero">
+        <h1>Aritmética Modular Visual</h1>
+        <p>
+          Visualize operações em Z<sub>n</sub> com animações interativas no
+          círculo modular.
+        </p>
+      </section>
+
+      <!-- Painel de inputs -->
+      <section class="interface card">
+        <div class="input-group">
+          <label for="modn">Módulo (n)</label>
+          <input
+            type="number"
+            id="modn"
+            placeholder="Ex: 7"
+            class="input"
+            min="1"
+            max="30"
+          />
         </div>
 
-        <div class="interface card">
-            <input type="number" id="modn" placeholder="Módulo" class="input">
-            <input type="number" id="numA" placeholder="Primeiro número" class="input">
-            
-            <select name="operacoes" id="operacoes" class="selectOp">
-                <option value="" disabled selected>Escolha uma operação</option>
-                <option value="add">Adição (+)</option>
-                <option value="multi">Multiplicação (*)</option>
-                <option value="expo">Exponenciação (aᵇ)</option>
-            </select>
-            
-            <input type="number" id="numB" placeholder="Segundo número" class="input">
+        <div class="input-group">
+          <label for="numA">Valor (a)</label>
+          <input type="number" id="numA" placeholder="Ex: 3" class="input" />
         </div>
 
-        <div class="canvas-container">
-            <div class="circuloMod card">   
-                <canvas width="500" height="500" id="relogio"></canvas>
-            </div>
-            
-            <div class="grafico card">   
-                <canvas width="500" height="500" id="grafico"></canvas>
-            </div>
+        <div class="input-group">
+          <label for="operacoes">Operação</label>
+          <select id="operacoes" class="select-op">
+            <option value="" disabled selected>Selecione</option>
+            <option value="add">Adição (+)</option>
+            <option value="multi">Multiplicação (×)</option>
+            <option value="expo">Exponenciação (aᵇ)</option>
+          </select>
         </div>
 
-        <div class="hotkeys">
-            <p>Teclas de atalho:<br>P = pausar animação<br>Q = resetar e limpar</p>
+        <div class="input-group">
+          <label for="numB">Valor (b)</label>
+          <input type="number" id="numB" placeholder="Ex: 5" class="input" />
         </div>
-    </div>
 
-    <script src="circulomod.js"></script>
-</body>
+        <div class="btn-group">
+          <button id="btn-calcular" class="btn btn-primario">▶ Calcular</button>
+          <button id="btn-resetar" class="btn btn-secundario">↺ Limpar</button>
+        </div>
+      </section>
+
+      <!-- Resultado -->
+      <div id="painel-resultado" class="painel-resultado">
+        <div id="texto-resultado" class="resultado-expressao"></div>
+        <div id="status-animacao" class="status-animacao"></div>
+      </div>
+
+      <!-- Canvases -->
+      <section class="canvas-area">
+        <div class="canvas-card card">
+          <span class="canvas-titulo">Círculo Modular</span>
+          <div class="circulo-mod">
+            <canvas id="relogio"></canvas>
+          </div>
+        </div>
+        <div class="canvas-card card">
+          <span class="canvas-titulo">Grafo de Conexões</span>
+          <div class="grafo-conexoes">
+            <canvas id="grafico"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Controles e Atalhos -->
+      <section class="controles-bar card">
+        <div class="velocidade-control">
+          <label for="velocidade">Velocidade</label>
+          <input
+            type="range"
+            id="velocidade"
+            min="0.25"
+            max="3"
+            step="0.25"
+            value="1"
+          />
+          <span id="label-velocidade" class="velocidade-valor">1×</span>
+        </div>
+
+        <div class="atalhos">
+          <div class="atalho-item"><kbd class="tecla">Enter</kbd> Calcular</div>
+          <div class="atalho-item"><kbd class="tecla">P</kbd> Pausar</div>
+          <div class="atalho-item"><kbd class="tecla">Q</kbd> Resetar</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Projeto de FMCC — Universidade Federal de Campina Grande</p>
+      <p>Desenvolvido por:</p>
+      <ul>
+        <li>
+          Caio Emanuel Melo de Souza<a
+            href="https://github.com/caio-emanuel"
+          ></a>
+        </li>
+        <li>
+          João Gabriel S. Paiva <a href="https://github.com/Ilusinusmate"></a>
+        </li>
+        <li>Kaio Wilson <a href="https://github.com/ka-io-dev"></a></li>
+        <li>Pedro Artur Gomes Maia <a href="https://github.com/pagmaia"></a></li>
+        <li>Thomaz Alvim <a href="https://github.com/thomaz-alvim"></a></li>
+      </ul>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
